@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install PyQt6 keyboard webviewpy pyinstaller
+        pip install PyQt6 keyboard webviewpy pyinstaller pillow
 
     - name: Build with PyInstaller
       run: |
