@@ -1,0 +1,30 @@
+name: Build macOS App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        check-latest: true
+        pip-install: PyQt6 keyboard webviewpy pyinstaller
+
+    - name: Build with PyInstaller
+      run: |
+        python -m PyInstaller --strip --optimize 2 --clean --icon=ico.ico --noconsole --onefile --add-data "login.png;." --add-data "back.webp;." --add-data "close.webp;." --add-data "dev.webp;." --add-data "link.webp;." --add-data "lisensi.webp;." --add-data "maju.webp;." --add-data "refresh.webp;." --add-data "tentang.webp;." --add-data "detec.opus;." --add-data "exit.opus;." --add-data "lin.txt;." --add-data "ico.ico;." smart4cbt_pc-mod.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: macos-build
+        path: dist/*
